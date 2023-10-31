@@ -125,7 +125,7 @@ final class DeleteUserServiceCest
         );
         $tester->assertSame(
             [
-                FakeUserRepository::FUNCTION_GET_USER => [
+                FakeUserRepository::FUNCTION_DELETE_USER => [
                     [
                         'userId' => 1,
                     ],
