@@ -24,7 +24,6 @@ On that note, don't actually use Faker for your logger, you will have many calls
 For a logger, it's best to just array collect it and "fake" it like that, other classes like that where you don't own the deeper layers should get the same array collection treatment.
 However, with all that said, you do you.
 
-
 ### Future
 I will add a method that adds a count check between the amount of responses set up and the amount of calls done, similar to something Mockery offers.
 This is rather useful of course if you have a lot of responses or set up data but missed that you didn't actually see anything go in, happens when you have a lot of fake classes set up for one service.
