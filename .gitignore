@@ -1,0 +1,10 @@
+# Add / in front to make it path match and not name match
+
+# Composer
+/vendor/
+
+# Debug
+/temp/
+
+# PHPStorm
+/.idea/
