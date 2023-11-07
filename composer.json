@@ -1,0 +1,29 @@
+{
+    "name": "rocky/faker",
+    "description": "Simple class/method faking tool like Mockery and Prophecy to make tests focus on one service at a time",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Rockylars",
+            "email": "rockylars@protonmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "Rocky\\Faker\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Rocky\\Faker\\Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=8.0"
+    }
+}
