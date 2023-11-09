@@ -80,7 +80,8 @@ clear-codeception:
 	${PHP_RUN} composer dump-autoload
 
 ## tests:			Runs tests
-.PHONY: tests
+.PHONY: test tests
+test: tests
 tests: unit
 
 ## failed-tests:		Runs failed tests
