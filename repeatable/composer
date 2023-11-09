@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -eu
+
+# Runs composer in Docker while allowing you to repeat the command with it's arguments.
+ARGS="$@" make composer
