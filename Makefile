@@ -66,13 +66,6 @@ clear-local-branches:
 ## Tests
 ##--------------
 
-## build-codeception:	Builds stuff needed for Codeception
-.PHONY: build-codeception
-build-codeception:
-	${PHP_RUN} php vendor/bin/codecept bootstrap
-	${PHP_RUN} php vendor/bin/codecept build
-	${PHP_RUN} composer dump-autoload
-
 ## clear-codeception:	Resets stuff needed for Codeception
 .PHONY: clear-codeception
 clear-codeception:
