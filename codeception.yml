@@ -1,4 +1,4 @@
-namespace: Rocky\Tests
+namespace: Rocky\Faker\Tests
 support_namespace: Support
 paths:
   tests: tests
