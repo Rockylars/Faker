@@ -30,11 +30,10 @@ This is rather useful of course if you have a lot of responses or set up data bu
 
 ### Examples
 ```php
-final class FakeUserRepository extends Faker implements UserRepository
+final class FakeUserRepository extends Faker implements UserRepositoryInterface
 {
-    public const FUNCTION_GET_USER = 'getUser';
+    public const FUNCTION_GET_USER_BY_ID = 'getUserById';
     public const FUNCTION_GET_USERS = 'getUsers';
-    public const FUNCTION_IS_ACTIVE = 'isActive';
     public const FUNCTION_UPDATE_LAST_LOGIN = 'updateLastLogin';
     public const FUNCTION_DELETE_USER = 'deleteUser';
 
@@ -53,23 +52,16 @@ final class FakeUserRepository extends Faker implements UserRepository
         ]);
     }
 
-    public function isActive(int $userId): bool
-    {
-        return $this->returnOrThrow(__FUNCTION__, [
-            'userId' => $userId,
-        ]);
-    }
-
     public function updateLastLogin(int $userId): void
     {
-        return $this->voidOrThrow(__FUNCTION__, [
+        $this->voidOrThrow(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }
 
     public function deleteUser(int $userId): void
     {
-        return $this->voidOrThrow(__FUNCTION__, [
+        $this->voidOrThrow(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }
@@ -84,7 +76,7 @@ final class DeleteUserServiceCest
     private FakeLogger $fakeLogger;
     private FakeUserRepository $fakeUserRepository;
 
-    public function _before(IntegrationTester $tester): void
+    public function _before(UnitTester $tester): void
     {
         $this->deleteUserService = new DeleteUserService(
             $this->fakeLogger = new FakeLogger(),
@@ -92,14 +84,14 @@ final class DeleteUserServiceCest
         );
     }
 
-    public function deleteUserWillCheckAndDeleteUserByIdIfNothingIsLinked(IntegrationTester $tester): void
+    public function deleteUserWillCheckAndDeleteUserByIdIfNothingIsLinked(UnitTester $tester): void
     {
-        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER, [
+        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
             [Faker::ACTION_RETURN => new User(
-                1,
-                'Rocky',
-                true,
-                DateTimeImmutable::createFromFormat(
+                id: 1,
+                name: 'Rocky',
+                isAdmin: false,
+                lastLogin: DateTimeImmutable::createFromFormat(
                     '!Y-m-d H:i:s',
                     '2023-02-17 12:13:14',
                     new \DateTimeZone('Europe/Amsterdam')
@@ -139,5 +131,27 @@ final class DeleteUserServiceCest
         );
     }
 }
+```
+
+Keep in mind that if you use `expectException` and `expectExceptionMessage` instead of `expectThrowable` you should use
+the following code to wrap your call as those will silently ignore the asserts below it otherwise.
+
+```php
+// Using expectException and expectExceptionMessage will stop the test at the error, so a try catch is used instead.
+$exceptionWasCaught = false;
+try {
+    // Call that will throw an exception
+} catch (\Throwable $throwable) {
+    // Do not assert like this on natural exceptions as those generate traces and such you can't just replicate.
+    self::assertEquals(
+        new \RuntimeException(
+            "something happened",
+            301
+        ),
+        $throwable
+    );
+    $exceptionWasCaught = true;
+}
+self::assertTrue($exceptionWasCaught);
 ```
 
