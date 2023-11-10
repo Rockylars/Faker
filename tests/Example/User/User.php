@@ -1,6 +1,6 @@
 <?php
 
-namespace Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User;
+namespace Rocky\Faker\Tests\Example\User;
 
 final class User
 {

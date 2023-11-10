@@ -3,8 +3,8 @@
 namespace Rocky\Faker\Tests\Fake\User;
 
 use Rocky\Faker\Faker;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User\User;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User\UserRepositoryInterface;
+use Rocky\Faker\Tests\Example\User\User;
+use Rocky\Faker\Tests\Example\User\UserRepositoryInterface;
 
 final class FakeUserRepository extends Faker implements UserRepositoryInterface
 {

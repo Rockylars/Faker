@@ -6,8 +6,8 @@ namespace Rocky\Faker\Tests\Unit\TestDeleteUserService;
 
 use Psr\Log\LogLevel;
 use Rocky\Faker\Faker;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User\DeleteUserService;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User\User;
+use Rocky\Faker\Tests\Example\User\DeleteUserService;
+use Rocky\Faker\Tests\Example\User\User;
 use Rocky\Faker\Tests\Fake\Shared\FakeLogger;
 use Rocky\Faker\Tests\Fake\User\FakeUserRepository;
 use Rocky\Faker\Tests\Support\UnitTester;

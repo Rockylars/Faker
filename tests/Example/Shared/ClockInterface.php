@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\Shared;
+namespace Rocky\Faker\Tests\Example\Shared;
 
 use DateTimeImmutable;
 use DateTimeZone;
