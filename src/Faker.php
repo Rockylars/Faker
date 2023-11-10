@@ -59,6 +59,28 @@ abstract class Faker
         $this->responsesForCallsToGetPerFunction[$faked] = $responses;
     }
 
+    /** @param array<string, mixed> $response */
+    final public function addResponseFor(string $faked, array $response): void
+    {
+        if (!method_exists(static::class, $faked)) {
+            throw new Exception(static::class . '::' . $faked . ' does not exist');
+        }
+        $this->iterationsOfCallsToPerFunction[$faked] ??= 0;
+        $this->responsesForCallsToGetPerFunction[$faked][] = $response;
+    }
+
+    /** @param array<int, array<string, mixed>> $responses */
+    final public function addResponsesFor(string $faked, array $responses): void
+    {
+        if (!method_exists(static::class, $faked)) {
+            throw new Exception(static::class . '::' . $faked . ' does not exist');
+        }
+        $this->iterationsOfCallsToPerFunction[$faked] ??= 0;
+        $this->responsesForCallsToGetPerFunction[$faked] = array_key_exists($faked, $this->responsesForCallsToGetPerFunction)
+            ? array_merge($this->responsesForCallsToGetPerFunction[$faked], $responses)
+            : $responses;
+    }
+
     /** @return array<array<string, mixed>> */
     final public function getCallsTo(string $faked): array
     {
