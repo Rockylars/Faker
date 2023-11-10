@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  php-cli:
+    build: docker/php-cli
+    environment:
+      COMPOSER_HOME: "/home/.composer"
+      PHP_IDE_CONFIG: "serverName=localhost"
+    extra_hosts:
+      - "host.docker.internal:host-gateway" #This is needed for Linux
+    volumes:
+      - ./:/opt/project
+    networks:
+      - default

@@ -9,7 +9,6 @@
             "email": "rockylars@protonmail.com"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Rocky\\Faker\\": "src/"
@@ -17,13 +16,23 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Rocky\\Faker\\Tests\\": "tests/"
+            "Rocky\\Faker\\Tests\\": "tests/",
+            "Rocky\\Faker\\Tests\\Support\\": "tests/_support"
         }
     },
     "config": {
         "sort-packages": true
     },
+    "minimum-stability": "stable",
     "require": {
         "php": ">=8.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5",
+        "codeception/module-asserts": "*",
+        "codeception/module-db": "^3",
+        "codeception/module-phpbrowser": "*",
+        "psr/clock": "^1",
+        "psr/log": "^3"
     }
 }
