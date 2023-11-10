@@ -87,10 +87,10 @@ failed-tests:
 clear-failed:
 	rm -f tests/_output/failed
 
-## unit:			Runs unit tests
+## unit:			Runs unit tests, add test file path as argument to only run that, add ":someTestFunction" behind it to specify it even more.
 .PHONY: unit
 unit: clear-failed
-	${PHP_RUN} php vendor/bin/codecept run Unit
+	${PHP_RUN} php vendor/bin/codecept run Unit $(ARGS)
 
 ##
 ##--------------
