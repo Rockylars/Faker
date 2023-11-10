@@ -145,6 +145,182 @@ final class FakerCest
         );
     }
 
+    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    public function addResponseForWillAddResponses(UnitTester $tester): void
+    {
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_RETURN => self::getExampleUser()]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_THROW => $exceptionThrown2 = new RuntimeException('Could not find user 2')]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_RETURN => self::getExampleUser()]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_RETURN => self::getExampleUser()]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_DELETE_USER,
+            [Faker::ACTION_VOID => null]
+        );
+        // ===============
+        // Not called as it failed earlier.
+        // ===============
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_DELETE_USER,
+            [Faker::ACTION_THROW => $exceptionThrown3 = new RuntimeException('Database timeout exception')]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_DELETE_USER,
+            [Faker::ACTION_VOID => null]
+        );
+
+        $this->deleteUserService->deleteUser(2);
+
+        $tester->expectThrowable(
+            $exceptionThrown2,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $tester->expectThrowable(
+            $exceptionThrown3,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $this->deleteUserService->deleteUser(2);
+    }
+
+    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    public function addResponseForWillAddResponsesAndWorkInNewWay(UnitTester $tester): void
+    {
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_RETURN => self::getExampleUser()]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_DELETE_USER,
+            [Faker::ACTION_VOID => null]
+        );
+
+        $this->deleteUserService->deleteUser(2);
+
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_THROW => $exceptionThrown2 = new RuntimeException('Could not find user 2')]
+        );
+        // ===============
+        // Not called as it failed earlier.
+        // ===============
+
+        $tester->expectThrowable(
+            $exceptionThrown2,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_RETURN => self::getExampleUser()]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_DELETE_USER,
+            [Faker::ACTION_THROW => $exceptionThrown3 = new RuntimeException('Database timeout exception')]
+        );
+
+        $tester->expectThrowable(
+            $exceptionThrown3,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
+            [Faker::ACTION_RETURN => self::getExampleUser()]
+        );
+        $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_DELETE_USER,
+            [Faker::ACTION_VOID => null]
+        );
+
+        $this->deleteUserService->deleteUser(2);
+    }
+
+    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    public function addResponsesForWillAddResponses(UnitTester $tester): void
+    {
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+            [Faker::ACTION_THROW => $exceptionThrown2 = new RuntimeException('Could not find user 2')],
+        ]);
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+        ]);
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_DELETE_USER, [
+            [Faker::ACTION_VOID => null],
+            // Not called as it failed earlier.
+        ]);
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_DELETE_USER, [
+            [Faker::ACTION_THROW => $exceptionThrown3 = new RuntimeException('Database timeout exception')],
+            [Faker::ACTION_VOID => null],
+        ]);
+
+        $this->deleteUserService->deleteUser(2);
+
+        $tester->expectThrowable(
+            $exceptionThrown2,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $tester->expectThrowable(
+            $exceptionThrown3,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $this->deleteUserService->deleteUser(2);
+    }
+
+    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    public function addResponsesForWillAddResponsesAndWorkInNewWay(UnitTester $tester): void
+    {
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+            [Faker::ACTION_THROW => $exceptionThrown2 = new RuntimeException('Could not find user 2')],
+        ]);
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_DELETE_USER, [
+            [Faker::ACTION_VOID => null],
+            // Not called as it failed earlier.
+        ]);
+
+        $this->deleteUserService->deleteUser(2);
+
+        $tester->expectThrowable(
+            $exceptionThrown2,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+        ]);
+        $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_DELETE_USER, [
+            [Faker::ACTION_THROW => $exceptionThrown3 = new RuntimeException('Database timeout exception')],
+            [Faker::ACTION_VOID => null],
+        ]);
+
+        $tester->expectThrowable(
+            $exceptionThrown3,
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+
+        $this->deleteUserService->deleteUser(2);
+    }
+
     public function getCallsToWillReturnCallsForIndividualMethods(UnitTester $tester): void
     {
         $this->returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
