@@ -29,9 +29,9 @@
     },
     "require-dev": {
         "codeception/codeception": "^5",
-        "codeception/module-asserts": "*",
+        "codeception/module-asserts": "^3",
         "codeception/module-db": "^3",
-        "codeception/module-phpbrowser": "*",
+        "codeception/module-phpbrowser": "^3",
         "psr/clock": "^1",
         "psr/log": "^3"
     }
