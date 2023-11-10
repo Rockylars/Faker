@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User;
 
-interface DeleteUserServiceInterface
+interface UserCheckerInterface
 {
-    public function deleteUser(int|User $userOrId): void;
+    public function testMethodThatMightReturnNull(): ?int;
 }

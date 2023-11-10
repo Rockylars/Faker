@@ -6,7 +6,7 @@ namespace Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User;
 
 use Psr\Log\LoggerInterface;
 
-final class DeleteUserService implements DeleteUserServiceInterface
+final class DeleteUserService
 {
     public function __construct(
         public LoggerInterface $logger,
