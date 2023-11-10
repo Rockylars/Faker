@@ -7,7 +7,7 @@ namespace Rocky\Faker\Tests\Fake\Shared;
 use DateTimeImmutable;
 use DateTimeZone;
 use Psr\Log\LoggerInterface;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\Shared\ClockInterface;
+use Rocky\Faker\Tests\Example\Shared\ClockInterface;
 
 final class FakeClock implements ClockInterface
 {

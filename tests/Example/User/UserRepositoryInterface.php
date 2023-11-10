@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User;
+namespace Rocky\Faker\Tests\Example\User;
 
 interface UserRepositoryInterface
 {

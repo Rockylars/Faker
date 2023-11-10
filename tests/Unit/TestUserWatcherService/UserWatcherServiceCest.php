@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Rocky\Faker\Tests\Unit\TestUserWatcherService;
 
 use Rocky\Faker\Faker;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User\User;
-use Rocky\Faker\Tests\Fake\NotFakeButNeededForExample\User\UserWatcherService;
+use Rocky\Faker\Tests\Example\User\User;
+use Rocky\Faker\Tests\Example\User\UserWatcherService;
 use Rocky\Faker\Tests\Fake\User\FakeUserChecker;
 use Rocky\Faker\Tests\Fake\User\FakeUserRepository;
 use Rocky\Faker\Tests\Support\UnitTester;
