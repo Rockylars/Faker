@@ -69,8 +69,8 @@ clear-local-branches:
 ## clear-codeception:	Resets stuff needed for Codeception
 .PHONY: clear-codeception
 clear-codeception:
-	${PHP_RUN} php vendor/bin/codecept build
 	${PHP_RUN} composer dump-autoload
+	${PHP_RUN} php vendor/bin/codecept build
 
 ## tests:			Runs tests
 .PHONY: test tests
