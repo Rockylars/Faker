@@ -1,5 +1,5 @@
 {
-    "name": "rocky/faker",
+    "name": "rockylars/faker",
     "description": "Simple class/method faking tool like Mockery and Prophecy to make tests focus on one service at a time",
     "type": "library",
     "license": "MIT",
