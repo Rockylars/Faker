@@ -3,8 +3,8 @@
 # Composer
 /vendor/
 
-# Debug
-/temp/
+# Output, logs, cache, debugging
+/output/
 
 # PHPStorm
 /.idea/

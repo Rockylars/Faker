@@ -94,6 +94,33 @@ unit: clear-failed
 
 ##
 ##--------------
+## Analyze
+##--------------
+
+## analyze:		Runs PHPStan -> everything
+.PHONY: analyse analyze
+analyse: analyze
+analyze: analyze-all analyze-src
+
+## analyze-all:		Runs PHPStan -> src + tests
+.PHONY: analyse-all analyze-all
+analyse-all: analyze-all
+analyze-all:
+	${PHP_RUN} php -d memory_limit=-1 vendor/bin/phpstan analyse --configuration=phpstan-all.neon
+
+## analyze-src:		Runs PHPStan -> src
+.PHONY: analyse-src analyze-src
+analyse-src: analyze-src
+analyze-src:
+	${PHP_RUN} php -d memory_limit=-1 vendor/bin/phpstan analyse --configuration=phpstan-src.neon
+
+## baseline:		Runs PHPStan -> baseline
+.PHONY: baseline
+baseline:
+	${PHP_RUN} php -d memory_limit=-1 vendor/bin/phpstan analyse --configuration=phpstan-all.neon --generate-baseline=phpstan-all-baseline.neon
+
+##
+##--------------
 ## Extra
 ##--------------
 

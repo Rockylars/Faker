@@ -18,7 +18,6 @@ use RuntimeException;
 final class FakerCest
 {
     private DeleteUserService $deleteUserService;
-    private FakeLogger $fakeLogger;
     private FakeUserRepository $fakeUserRepository;
     private UserWatcherService $userWatcherService;
     private FakeUserChecker $fakeUserChecker;
@@ -26,7 +25,7 @@ final class FakerCest
     public function _before(UnitTester $tester): void
     {
         $this->deleteUserService = new DeleteUserService(
-            $this->fakeLogger = new FakeLogger(),
+            new FakeLogger(),
             $this->fakeUserRepository = new FakeUserRepository()
         );
         $this->userWatcherService = new UserWatcherService(

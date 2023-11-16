@@ -16,11 +16,11 @@ abstract class Faker
     public const ACTION_THROW = 'throw';
     public const ACTION_VOID = 'void';
 
-    /** @var array<string, array<int, array<string, mixed>>> */
+    /** @var array<string, array<int, array<string|int, mixed>>> */
     private array $callsToPerFunction = [];
     /** @var array<string, int> */
     private array $iterationsOfCallsToPerFunction = [];
-    /** @var array<int, array<string, mixed>> */
+    /** @var array<string, array<int, array<string, mixed>>> */
     private array $responsesForCallsToGetPerFunction = [];
 
     /** @param array<string|int, mixed> $input */
@@ -81,19 +81,19 @@ abstract class Faker
             : $responses;
     }
 
-    /** @return array<array<string, mixed>> */
+    /** @return array<int, array<string|int, mixed>> */
     final public function getCallsTo(string $faked): array
     {
         return $this->callsToPerFunction[$faked] ?? [];
     }
 
-    /** @return array<array<string, mixed>> */
+    /** @return array<string, array<int, array<string|int, mixed>>> */
     final public function getAllCallsInStyleOrdered(): array
     {
         return $this->callsToPerFunction;
     }
 
-    /** @return array<array<string, mixed>> */
+    /** @return array<string, array<int, array<string|int, mixed>>> */
     final public function getAllCallsInStyleSorted(): array
     {
         $callsToPerFunction = $this->callsToPerFunction;
@@ -103,7 +103,7 @@ abstract class Faker
 
     /**
      * @param array<int, string> $keysToIgnore
-     * @return array<array<string, mixed>>
+     * @return array<string, array<int, array<string|int, mixed>>>
      */
     final public function getAllCallsInStyleOrderedExcept(array $keysToIgnore): array
     {
@@ -116,7 +116,7 @@ abstract class Faker
 
     /**
      * @param array<int, string> $keysToIgnore
-     * @return array<array<string, mixed>>
+     * @return array<string, array<int, array<string|int, mixed>>>
      */
     final public function getAllCallsInStyleSortedExcept(array $keysToIgnore): array
     {

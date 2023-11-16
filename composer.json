@@ -32,7 +32,10 @@
         "codeception/module-asserts": "^3",
         "codeception/module-db": "^3",
         "codeception/module-phpbrowser": "^3",
+        "phpstan/phpstan": "^1",
+        "phpstan/phpstan-deprecation-rules": "^1",
         "psr/clock": "^1",
-        "psr/log": "^3"
+        "psr/log": "^3",
+        "spaze/phpstan-disallowed-calls": "^2"
     }
 }

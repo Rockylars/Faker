@@ -1,0 +1,64 @@
+parameters:
+    level: 8
+    tmpDir: output/cache/phpstan
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/_support/_generated
+
+    # https://github.com/spaze/phpstan-disallowed-calls
+
+    disallowedFunctionCalls:
+        -
+            function:
+                - 'dump()'
+                - 'var_dump()'
+                - 'print()'
+                - 'print_r()'
+                - 'echo()'
+                - 'dd()'
+                - 'die()'
+                - 'exit()'
+                - 'eval()'
+                - 'debug_backtrace()'
+                - 'file_put_contents()'
+            message: 'you probably left a debug statement active in the code'
+        -
+            function:
+                - 'microtime()'
+                - 'sleep()'
+            message: 'these are not helpful with tests, use the Clock methods instead'
+            allowInMethods:
+                - 'Freep\Shared\Domain\SystemClock::microTime()'
+                - 'Freep\Shared\Domain\SystemClock::sleep()'
+
+    disallowedNamespaces:
+        -
+            namespace:
+                - PhpCsFixer\*
+                - PHPStan\*
+                - Spaze\PHPStan\*
+            message: 'these are not meant to be accessed'
+
+    disallowedMethodCalls:
+        -
+            method: 'Throwable::getTrace()'
+            message: 'do not leave these in'
+            errorTip: 'You probably left a debug statement'
+        -
+            method: 'Throwable::getTraceAsString()'
+            message: 'do not leave these in'
+            errorTip: 'You probably left a debug statement'
+
+includes:
+    - phpstan-all-baseline.neon
+    - vendor/phpstan/phpstan-deprecation-rules/rules.neon
+    # Maybe later enable Symfony stuff, for now it isn't needed.
+    # vendor/phpstan/phpstan-symfony/extension.neon
+    # vendor/phpstan/phpstan-symfony/rules.neon
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
+    - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon

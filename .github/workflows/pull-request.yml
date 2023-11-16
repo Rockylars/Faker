@@ -6,6 +6,43 @@ on: pull_request
 # PHP patch compared to those in GitHub Actions.
 
 jobs:
+  phpstan-analyse:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version:
+          - "8.0"
+          - "8.1"
+          - "8.2"
+    steps:
+      - name: Check out the code so Composer can see our private composer.json file and more
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup PHP with tools
+        uses: shivammathur/setup-php@2.27.1
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer:v2
+          ini-values: zend.exception_ignore_args="0", date.timezone="Europe/Amsterdam"
+          # Start with none to disable default, include all from `php -i` in `make bash`.
+          # Do not include `cli`, `common` or `fpm`, though this is luckily not the case here.
+          # We replace mysql with mysqlnd and pdo_mysql.
+          # Also include the ext's from your composer.json, you should also have them enabled (not installed).
+          extensions: none, ctype, curl, date, dom, fileinfo, filter, ftp, hash, iconv, json, libxml, mbstring, mysqlnd, openssl, pcre, PDO, pdo_sqlite, Phar, posix, readline, Reflection, session, SimpleXML, sodium, SPL, sqlite3, standard, tokenizer, xml, xmlreader, xmlwriter, zlib
+
+      - name: Run Composer install
+        run: composer install
+
+      - name: Build Codeception stuff
+        run: vendor/bin/codecept build
+
+      - name: Run PHPStan analyze for src/tests
+        run: vendor/bin/phpstan analyse --configuration=phpstan-all.neon
+
+      - name: Run PHPStan analyze for extra bits for src
+        run: vendor/bin/phpstan analyse --configuration=phpstan-src.neon
+
   test-unit:
     runs-on: ubuntu-latest
     strategy:
