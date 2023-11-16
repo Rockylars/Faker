@@ -34,6 +34,9 @@ jobs:
       - name: Run Composer install
         run: composer install
 
+      - name: Build Codeception stuff
+        run: vendor/bin/codecept build
+
       - name: Run PHPStan analyze for src/tests
         run: vendor/bin/phpstan analyse --configuration=phpstan-all.neon
 
