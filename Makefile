@@ -121,6 +121,21 @@ baseline:
 
 ##
 ##--------------
+## Code styling
+##--------------
+
+## cs:				Runs PHPCS through docker
+.PHONY: cs
+cs:
+	${PHP_RUN} php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --verbose --dry-run --diff $(ARGS)
+
+## cs-fix:			Runs PHPCS with fixes through docker
+.PHONY: cs-fix
+cs-fix:
+	${PHP_RUN} php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --verbose --diff $(ARGS)
+
+##
+##--------------
 ## Extra
 ##--------------
 

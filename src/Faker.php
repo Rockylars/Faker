@@ -28,9 +28,9 @@ abstract class Faker
     {
         $this->callsToPerFunction[$faked][] = $input;
         if (!array_key_exists($faked, $this->iterationsOfCallsToPerFunction)) {
-            throw new Exception('No responses defined for '. static::class . '::' . $faked . ', add them to the setResponsesFor');
+            throw new Exception('No responses defined for ' . static::class . '::' . $faked . ', add them to the setResponsesFor');
         }
-        $response = $this->responsesForCallsToGetPerFunction[$faked][$this->iterationsOfCallsToPerFunction[$faked]++] ?? throw new Exception('Not enough responses defined for '. static::class . '::' . $faked . ', add more to the setResponsesFor');
+        $response = $this->responsesForCallsToGetPerFunction[$faked][$this->iterationsOfCallsToPerFunction[$faked]++] ?? throw new Exception('Not enough responses defined for ' . static::class . '::' . $faked . ', add more to the setResponsesFor');
         return array_key_exists(self::ACTION_RETURN, $response)
             ? $response[self::ACTION_RETURN]
             : throw $response[self::ACTION_THROW];
@@ -41,9 +41,9 @@ abstract class Faker
     {
         $this->callsToPerFunction[$faked][] = $input;
         if (!array_key_exists($faked, $this->iterationsOfCallsToPerFunction)) {
-            throw new Exception('No responses defined for '. static::class . '::' . $faked . ', add them to the setResponsesFor');
+            throw new Exception('No responses defined for ' . static::class . '::' . $faked . ', add them to the setResponsesFor');
         }
-        $response = $this->responsesForCallsToGetPerFunction[$faked][$this->iterationsOfCallsToPerFunction[$faked]++] ?? throw new Exception('Not enough responses defined for '. static::class . '::' . $faked . ', add more to the setResponsesFor');
+        $response = $this->responsesForCallsToGetPerFunction[$faked][$this->iterationsOfCallsToPerFunction[$faked]++] ?? throw new Exception('Not enough responses defined for ' . static::class . '::' . $faked . ', add more to the setResponsesFor');
         if (!array_key_exists(self::ACTION_VOID, $response)) {
             throw $response[self::ACTION_THROW];
         }
