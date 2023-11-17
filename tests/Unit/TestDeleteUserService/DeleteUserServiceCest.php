@@ -11,6 +11,9 @@ use Rocky\Faker\Tests\Example\User\User;
 use Rocky\Faker\Tests\Fake\Shared\FakeLogger;
 use Rocky\Faker\Tests\Fake\User\FakeUserRepository;
 use Rocky\Faker\Tests\Support\UnitTester;
+use Exception;
+use DateTimeImmutable;
+use DateTimeZone;
 
 final class DeleteUserServiceCest
 {
@@ -33,7 +36,7 @@ final class DeleteUserServiceCest
         ]);
 
         $tester->expectThrowable(
-            new \Exception('You can not delete an admin (1|Rocky)'),
+            new Exception('You can not delete an admin (1|Rocky)'),
             function (): void {
                 $this->deleteUserService->deleteUser(self::getExampleAdminUser());
             }
@@ -61,7 +64,7 @@ final class DeleteUserServiceCest
         ]);
 
         $tester->expectThrowable(
-            new \Exception('You can not delete an admin (1|Rocky)'),
+            new Exception('You can not delete an admin (1|Rocky)'),
             function (): void {
                 $this->deleteUserService->deleteUser(1);
             }
@@ -158,10 +161,10 @@ final class DeleteUserServiceCest
             1,
             'Rocky',
             true,
-            \DateTimeImmutable::createFromFormat(
+            DateTimeImmutable::createFromFormat(
                 '!Y-m-d H:i:s',
                 '2023-02-17 12:13:14',
-                new \DateTimeZone('Europe/Amsterdam')
+                new DateTimeZone('Europe/Amsterdam')
             ),
         );
     }
@@ -172,10 +175,10 @@ final class DeleteUserServiceCest
             2,
             'NotRocky',
             false,
-            \DateTimeImmutable::createFromFormat(
+            DateTimeImmutable::createFromFormat(
                 '!Y-m-d H:i:s',
                 '2023-02-13 12:11:14',
-                new \DateTimeZone('Europe/Amsterdam')
+                new DateTimeZone('Europe/Amsterdam')
             ),
         );
     }

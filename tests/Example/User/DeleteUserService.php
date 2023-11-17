@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Rocky\Faker\Tests\Example\User;
 
 use Psr\Log\LoggerInterface;
+use Exception;
 
 final class DeleteUserService
 {
@@ -20,7 +21,7 @@ final class DeleteUserService
             : $userOrId;
 
         if ($user->isAdmin) {
-            throw new \Exception("You can not delete an admin ($user->id|$user->name)");
+            throw new Exception("You can not delete an admin ($user->id|$user->name)");
         }
 
         $this->userRepository->deleteUser($user->id);

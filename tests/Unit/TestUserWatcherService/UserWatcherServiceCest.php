@@ -10,6 +10,8 @@ use Rocky\Faker\Tests\Example\User\UserWatcherService;
 use Rocky\Faker\Tests\Fake\User\FakeUserChecker;
 use Rocky\Faker\Tests\Fake\User\FakeUserRepository;
 use Rocky\Faker\Tests\Support\UnitTester;
+use DateTimeImmutable;
+use DateTimeZone;
 
 final class UserWatcherServiceCest
 {
@@ -99,10 +101,10 @@ final class UserWatcherServiceCest
             1,
             'Rocky',
             true,
-            \DateTimeImmutable::createFromFormat(
+            DateTimeImmutable::createFromFormat(
                 '!Y-m-d H:i:s',
                 '2023-02-17 12:13:14',
-                new \DateTimeZone('Europe/Amsterdam')
+                new DateTimeZone('Europe/Amsterdam')
             ),
         );
     }

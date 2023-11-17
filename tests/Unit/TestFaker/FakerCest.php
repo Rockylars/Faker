@@ -14,6 +14,8 @@ use Rocky\Faker\Tests\Fake\User\FakeUserChecker;
 use Rocky\Faker\Tests\Fake\User\FakeUserRepository;
 use Rocky\Faker\Tests\Support\UnitTester;
 use RuntimeException;
+use DateTimeImmutable;
+use DateTimeZone;
 
 final class FakerCest
 {
@@ -479,10 +481,10 @@ final class FakerCest
             2,
             'NotRocky',
             false,
-            \DateTimeImmutable::createFromFormat(
+            DateTimeImmutable::createFromFormat(
                 '!Y-m-d H:i:s',
                 '2023-02-13 12:11:14',
-                new \DateTimeZone('Europe/Amsterdam')
+                new DateTimeZone('Europe/Amsterdam')
             ),
         );
     }
