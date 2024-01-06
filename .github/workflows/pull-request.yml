@@ -15,6 +15,7 @@ jobs:
           - "8.0"
           - "8.1"
           - "8.2"
+          - "8.3"
     steps:
       - name: Check out the code so Composer can see our private composer.json file and more
         uses: actions/checkout@v4.1.1
@@ -52,6 +53,7 @@ jobs:
           - "8.0"
           - "8.1"
           - "8.2"
+          - "8.3"
     steps:
       - name: Check out the code so composer can see our private composer.json file and more
         uses: actions/checkout@v4.1.1
