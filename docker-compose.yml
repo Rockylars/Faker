@@ -10,6 +10,7 @@ services:
       - "host.docker.internal:host-gateway" #This is needed for Linux to run
     volumes:
       - ./:/opt/project
+      - ~/.composer:/home/.composer:cached
     networks:
       - default
     user: ${HOST_UID}:${HOST_GID} #This is needed for Linux to not create files as root
