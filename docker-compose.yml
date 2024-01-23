@@ -7,8 +7,9 @@ services:
       COMPOSER_HOME: "/home/.composer"
       PHP_IDE_CONFIG: "serverName=localhost"
     extra_hosts:
-      - "host.docker.internal:host-gateway" #This is needed for Linux
+      - "host.docker.internal:host-gateway" #This is needed for Linux to run
     volumes:
       - ./:/opt/project
     networks:
       - default
+    user: ${HOST_UID}:${HOST_GID} #This is needed for Linux to not create files as root
