@@ -5,6 +5,10 @@ SHELL=/bin/bash
 PHP_RUN := docker compose run --rm php-cli
 ARGS ?= $(shell read -p "Additional arguments ([enter] for none): " args; echo $$args)
 
+# Docker tends to start as user 0, aka root.
+# This is a problem when you want to create files, as a normal user can't simply edit those.
+# There's two ways to fix this, one is to use a specific user and the other is to add yourself to the docker group.
+# Here we chose the simpler "use your own user" approach.
 export HOST_UID := $(shell id -u)
 export HOST_GID := $(shell id -g)
 
