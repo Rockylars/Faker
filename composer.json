@@ -29,15 +29,16 @@
         "php": ">=8.0"
     },
     "require-dev": {
-        "codeception/codeception": "^5",
-        "codeception/module-asserts": "^3",
-        "codeception/module-db": "^3",
-        "codeception/module-phpbrowser": "^3",
-        "friendsofphp/php-cs-fixer": "^3.38",
-        "phpstan/phpstan": "^1",
-        "phpstan/phpstan-deprecation-rules": "^1",
-        "psr/clock": "^1",
-        "psr/log": "^3",
-        "spaze/phpstan-disallowed-calls": "^2"
+        "codeception/codeception": "^5.1",
+        "codeception/module-asserts": "^3.0",
+        "codeception/module-db": "^3.1",
+        "codeception/module-phpbrowser": "^3.0",
+        "friendsofphp/php-cs-fixer": "^3.49",
+        "phpstan/phpstan": "^1.10",
+        "phpstan/phpstan-deprecation-rules": "^1.1",
+        "psr/clock": "^1.0",
+        "psr/log": "^3.0",
+        "rockylars/package-files": "^1.0",
+        "spaze/phpstan-disallowed-calls": "^3.1"
     }
 }
