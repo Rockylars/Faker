@@ -1,21 +1,14 @@
-SHELL=/bin/bash
-
 .DEFAULT_GOAL := help
+MAKEFLAGS += --silent --warn-undefined-variables
+SHELL = /bin/bash
 
 PHP_RUN := docker compose run --rm php-cli
 ARGS ?= $(shell read -p "Additional arguments ([enter] for none): " args; echo $$args)
 
-# Docker tends to start as user 0, aka root.
-# This is a problem when you want to create files, as a normal user can't simply edit those.
-# There's two ways to fix this, one is to use a specific user and the other is to add yourself to the docker group.
-# Here we chose the simpler "use your own user" approach.
 export HOST_UID := $(shell id -u)
 export HOST_GID := $(shell id -g)
 
-##
-##--------------
-## Building
-##--------------
+##>—— Building —————————————
 
 ## build:			Build the docker containers
 .PHONY: build
@@ -24,13 +17,11 @@ build:
 
 ## setup:			Sets up the project for you
 .PHONY: setup
-setup:
+setup: build
 	${PHP_RUN} composer install --ansi
 
-##
-##--------------
-## Debugging
-##--------------
+
+##>—— Debugging ————————————
 
 ## bash:			Go into the container for running things manually
 .PHONY: bash
@@ -47,28 +38,7 @@ php:
 composer:
 	${PHP_RUN} composer $(ARGS) --ansi
 
-##
-##--------------
-## Git
-##--------------
-
-## branch:		Checkout main, get most recent version, create new branch based on main
-.PHONY: branch
-branch:
-	git checkout main
-	git pull
-	read -p "Enter branch name: " branch_name; \
-    git checkout -b $$branch_name
-
-## clear-local-branches:	Removes all local branches
-.PHONY: clear-local-branches
-clear-local-branches:
-	git for-each-ref --format '%(refname:short)' refs/heads | grep -v main | xargs git branch -D
-
-##
-##--------------
-## Tests
-##--------------
+##>—— Tests ————————————————
 
 ## clear-codeception:	Resets stuff needed for Codeception
 .PHONY: clear-codeception
@@ -96,10 +66,7 @@ clear-failed:
 unit: clear-failed
 	${PHP_RUN} php vendor/bin/codecept run Unit $(ARGS)
 
-##
-##--------------
-## Analyze
-##--------------
+##>—— Analyze ——————————————
 
 ## analyze:		Runs PHPStan -> everything
 .PHONY: analyse analyze
@@ -123,25 +90,19 @@ analyze-src:
 baseline:
 	${PHP_RUN} php -d memory_limit=-1 vendor/bin/phpstan analyse --configuration=phpstan-all.neon --generate-baseline=phpstan-all-baseline.neon
 
-##
-##--------------
-## Code styling
-##--------------
+##>—— Styling ——————————————
 
-## cs:				Runs PHPCS through docker
+## cs:			Runs PHPCS through docker
 .PHONY: cs
 cs:
 	${PHP_RUN} php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --verbose --dry-run --diff $(ARGS)
 
-## cs-fix:			Runs PHPCS with fixes through docker
+## cs-fix:		Runs PHPCS with fixes through docker
 .PHONY: cs-fix
 cs-fix:
 	${PHP_RUN} php -d memory_limit=-1 vendor/bin/php-cs-fixer fix --verbose --diff $(ARGS)
 
-##
-##--------------
-## Extra
-##--------------
+##>—— Extra ————————————————
 
 ## help:			Print this message
 .PHONY: help
@@ -153,5 +114,7 @@ help: Makefile
 tab-makefile:
 	sed -i 's/:	/:		/g' Makefile
 
-# End it with a blank line
-##
+## clear-local-branches:	Removes all local branches
+.PHONY: clear-local-branches
+clear-local-branches:
+	git for-each-ref --format '%(refname:short)' refs/heads | grep -v main | xargs git branch -D

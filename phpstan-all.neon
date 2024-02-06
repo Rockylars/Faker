@@ -23,15 +23,9 @@ parameters:
                 - 'eval()'
                 - 'debug_backtrace()'
                 - 'file_put_contents()'
-            message: 'you probably left a debug statement active in the code'
-        -
-            function:
                 - 'microtime()'
                 - 'sleep()'
-            message: 'these are not helpful with tests, use the Clock methods instead'
-            allowInMethods:
-                - 'Freep\Shared\Domain\SystemClock::microTime()'
-                - 'Freep\Shared\Domain\SystemClock::sleep()'
+            message: 'you probably left a debug statement active in the code'
 
     disallowedNamespaces:
         -
