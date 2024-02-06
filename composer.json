@@ -38,6 +38,6 @@
         "phpstan/phpstan-deprecation-rules": "^1",
         "psr/clock": "^1",
         "psr/log": "^3",
-        "spaze/phpstan-disallowed-calls": "^2"
+        "spaze/phpstan-disallowed-calls": "^3"
     }
 }
