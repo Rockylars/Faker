@@ -39,6 +39,7 @@
         "psr/clock": "^1.0",
         "psr/log": "^3.0",
         "rockylars/package-files": "^1.0",
-        "spaze/phpstan-disallowed-calls": "^3.1"
+        "spaze/phpstan-disallowed-calls": "^3.1",
+        "thecodingmachine/phpstan-safe-rule": "^1.2"
     }
 }
