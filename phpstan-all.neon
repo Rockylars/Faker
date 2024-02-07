@@ -56,4 +56,5 @@ includes:
     - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon
     - vendor/spaze/phpstan-disallowed-calls/disallowed-loose-calls.neon
+    # "Safe", the extension, is not yet installed, if this throws errors, install it.
     - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
