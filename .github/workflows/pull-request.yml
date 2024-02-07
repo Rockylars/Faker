@@ -36,7 +36,10 @@ jobs:
           extensions: none, ctype, curl, date, dom, fileinfo, filter, ftp, hash, iconv, json, libxml, mbstring, mysqlnd, openssl, pcre, PDO, pdo_sqlite, Phar, posix, readline, Reflection, session, SimpleXML, sodium, SPL, sqlite3, standard, tokenizer, xml, xmlreader, xmlwriter, zlib
 
       - name: Run Composer install
-        run: composer install
+        run: composer install --no-interaction
+
+      - name: Raise the PHP version
+        run: composer require php:~${{ matrix.php-version }} --no-interaction
 
       - name: Run composer update
         run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
