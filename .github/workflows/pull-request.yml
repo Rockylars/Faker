@@ -42,7 +42,7 @@ jobs:
         run: composer require php:~${{ matrix.php-version }} --no-interaction --no-update
 
       - name: Run composer update
-        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+        run: composer update --${{ matrix.stability }} --prefer-dist --no-interaction --with-all-dependencies
 
       - name: Build Codeception stuff
         run: vendor/bin/codecept build
