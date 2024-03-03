@@ -11,6 +11,7 @@ parameters:
         -
             namespace:
                 - Codeception\*
+                - PHPUnit\*
             message: 'these are not meant to be accessed'
         -
             namespace:
