@@ -101,7 +101,7 @@ final class UserWatcherServiceCest
             1,
             'Rocky',
             true,
-            DateTimeImmutable::createFromFormat(
+            \Safe\DateTimeImmutable::createFromFormat(
                 '!Y-m-d H:i:s',
                 '2023-02-17 12:13:14',
                 new DateTimeZone('Europe/Amsterdam')

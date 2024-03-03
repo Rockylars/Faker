@@ -481,7 +481,7 @@ final class FakerCest
             2,
             'NotRocky',
             false,
-            DateTimeImmutable::createFromFormat(
+            \Safe\DateTimeImmutable::createFromFormat(
                 '!Y-m-d H:i:s',
                 '2023-02-13 12:11:14',
                 new DateTimeZone('Europe/Amsterdam')
