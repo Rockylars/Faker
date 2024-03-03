@@ -4,6 +4,7 @@ parameters:
     paths:
         - src
         - tests
+        - .php-cs-fixer.php
     excludePaths:
         - tests/_support/_generated
 
@@ -30,7 +31,6 @@ parameters:
     disallowedNamespaces:
         -
             namespace:
-                - PhpCsFixer\*
                 - PHPStan\*
                 - Spaze\PHPStan\*
             message: 'these are not meant to be accessed'

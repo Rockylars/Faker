@@ -1,0 +1,23 @@
+parameters:
+    level: 8
+    tmpDir: output/cache/phpstan
+    paths:
+        - src
+        - .php-cs-fixer.php
+
+    # https://github.com/spaze/phpstan-disallowed-calls
+
+    disallowedNamespaces:
+        -
+            namespace:
+                - Codeception\*
+                - PHPUnit\*
+            message: 'these are not meant to be accessed'
+        -
+            namespace:
+                - Rocky\Faker\Tests\*
+            message: 'the test classes dont belong in the package code'
+
+includes:
+    - phpstan-all-baseline.neon
+    - vendor/spaze/phpstan-disallowed-calls/extension.neon

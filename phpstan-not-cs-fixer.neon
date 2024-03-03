@@ -3,13 +3,16 @@ parameters:
     tmpDir: output/cache/phpstan
     paths:
         - src
+        - tests
+    excludePaths:
+        - tests/_support/_generated
 
     # https://github.com/spaze/phpstan-disallowed-calls
 
     disallowedNamespaces:
         -
             namespace:
-                - Codeception\*
+                - PhpCsFixer\*
             message: 'these are not meant to be accessed'
 
 includes:
