@@ -112,6 +112,11 @@ final class FakerCest
         $tester->assertNull($this->userWatcherService->userObserved(7));
     }
 
+    public function returnOrThrowWillExecuteFunctions(UnitTester $tester): void
+    {
+        //TODO:
+    }
+
     public function voidOrThrowFailsWhenNoResponsesAreSet(UnitTester $tester): void
     {
         $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
@@ -124,6 +129,11 @@ final class FakerCest
                 $this->deleteUserService->deleteUser(2);
             }
         );
+    }
+
+    public function voidOrThrowWillExecuteFunctions(UnitTester $tester): void
+    {
+        //TODO:
     }
 
     public function voidOrThrowFailsWhenNotEnoughResponsesAreSet(UnitTester $tester): void
