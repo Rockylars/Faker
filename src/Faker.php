@@ -28,44 +28,20 @@ abstract class Faker
      * @param array<string|int, mixed> $input
      * @param array<int, mixed> $arguments
      */
-    final protected function returnOrThrow(string $faked, array $input, array $arguments = []): mixed
+    final protected function fakeCall(string $faked, array $input, array $arguments = []): mixed
     {
         $this->callsToPerFunction[$faked][] = $input;
         if (!array_key_exists($faked, $this->iterationsOfCallsToPerFunction)) {
             throw new Exception('No responses defined for ' . static::class . '::' . $faked . ', add them to the setResponsesFor');
         }
         $response = $this->responsesForCallsToGetPerFunction[$faked][$this->iterationsOfCallsToPerFunction[$faked]++] ?? throw new Exception('Not enough responses defined for ' . static::class . '::' . $faked . ', add more to the setResponsesFor');
-        if (array_key_exists(self::ACTION_RETURN, $response)) {
-            return $response[self::ACTION_RETURN];
-        } elseif (array_key_exists(self::ACTION_FUNCTION, $response)) {
-            return $response[self::ACTION_FUNCTION](...$arguments);
-        } elseif (array_key_exists(self::ACTION_THROW, $response)) {
-            throw $response[self::ACTION_THROW];
-        } else {
-            throw new Exception('Unknown response type');
-        }
-    }
-
-    /**
-     * @param array<string|int, mixed> $input
-     * @param array<int, mixed> $arguments
-     */
-    final protected function voidOrThrow(string $faked, array $input, array $arguments = []): void
-    {
-        $this->callsToPerFunction[$faked][] = $input;
-        if (!array_key_exists($faked, $this->iterationsOfCallsToPerFunction)) {
-            throw new Exception('No responses defined for ' . static::class . '::' . $faked . ', add them to the setResponsesFor');
-        }
-        $response = $this->responsesForCallsToGetPerFunction[$faked][$this->iterationsOfCallsToPerFunction[$faked]++] ?? throw new Exception('Not enough responses defined for ' . static::class . '::' . $faked . ', add more to the setResponsesFor');
-        if (array_key_exists(self::ACTION_VOID, $response)) {
-            return;
-        } elseif (array_key_exists(self::ACTION_FUNCTION, $response)) {
-            $response[self::ACTION_FUNCTION](...$arguments);
-        } elseif (array_key_exists(self::ACTION_THROW, $response)) {
-            throw $response[self::ACTION_THROW];
-        } else {
-            throw new Exception('Unknown response type');
-        }
+        return match (true) {
+            array_key_exists(self::ACTION_VOID, $response) => null,
+            array_key_exists(self::ACTION_RETURN, $response) => $response[self::ACTION_RETURN],
+            array_key_exists(self::ACTION_FUNCTION, $response) => $response[self::ACTION_FUNCTION](...$arguments),
+            array_key_exists(self::ACTION_THROW, $response) => throw $response[self::ACTION_THROW],
+            default => throw new Exception('Unknown response type ' . \Safe\json_encode(array_keys($response), JSON_INVALID_UTF8_SUBSTITUTE)),
+        };
     }
 
     /** @param array<int, array<string, mixed>> $responses */

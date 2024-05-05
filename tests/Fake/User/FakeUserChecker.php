@@ -11,7 +11,7 @@ final class FakeUserChecker extends Faker implements UserCheckerInterface
 
     public function testMethodThatMightReturnNull(): ?int
     {
-        return $this->returnOrThrow(__FUNCTION__, [
+        return $this->fakeCall(__FUNCTION__, [
             'a call was made'
         ]);
     }
