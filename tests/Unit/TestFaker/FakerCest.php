@@ -8,13 +8,14 @@ use Exception;
 use Rocky\Faker\Faker;
 use Rocky\Faker\Tests\Example\User\DeleteUserService;
 use Rocky\Faker\Tests\Example\User\User;
+use Rocky\Faker\Tests\Example\User\UserService;
 use Rocky\Faker\Tests\Example\User\UserWatcherService;
 use Rocky\Faker\Tests\Fake\Shared\FakeLogger;
+use Rocky\Faker\Tests\Fake\User\FakeUserCallService;
 use Rocky\Faker\Tests\Fake\User\FakeUserChecker;
 use Rocky\Faker\Tests\Fake\User\FakeUserRepository;
 use Rocky\Faker\Tests\Support\UnitTester;
 use RuntimeException;
-use DateTimeImmutable;
 use DateTimeZone;
 
 final class FakerCest
@@ -110,6 +111,74 @@ final class FakerCest
 
         // This assert is not needed, but it is nice to see it come all the way out.
         $tester->assertNull($this->userWatcherService->userObserved(7));
+    }
+
+    public function returnOrThrowAndVoidOrThrowWillExecuteFunctions(UnitTester $tester): void
+    {
+        $userService = new UserService(
+            $userCallService = new FakeUserCallService()
+        );
+
+        $userCallService->setResponsesFor(FakeUserCallService::FUNCTION_METHOD_THAT_RUNS, [
+            [Faker::ACTION_VOID => null],
+        ]);
+        $userCallService->setResponsesFor(FakeUserCallService::FUNCTION_METHOD_THAT_UPDATES, [
+            [Faker::ACTION_FUNCTION => static function (User $user): void {
+                $user->name = strrev($user->name);
+            }],
+        ]);
+        $userCallService->setResponsesFor(FakeUserCallService::FUNCTION_METHOD_THAT_UPDATES_AND_RETURNS, [
+            [Faker::ACTION_FUNCTION => static function (User $user): User {
+                $user->name = str_repeat($user->name, 2);
+                return $user;
+            }],
+        ]);
+        $userCallService->setResponsesFor(FakeUserCallService::FUNCTION_METHOD_THAT_CHECKS, [
+            [Faker::ACTION_VOID => null],
+        ]);
+
+        $user = new User(
+            1,
+            'UserName',
+            false,
+            \Safe\DateTimeImmutable::createFromFormat(
+                '!Y-m-d H:i:s',
+                '2023-02-17 12:13:14',
+                new DateTimeZone('Europe/Amsterdam')
+            )
+        );
+        $userService->updateUser($user);
+
+        // You should not save the properties in your project's tests. This is merely to confirm that this here is working.
+        $tester->assertSame(
+            [
+                FakeUserCallService::FUNCTION_METHOD_THAT_CHECKS => [
+                    [
+                        'user' => $user,
+                        'userProperties' => '{"id":1,"name":"emaNresUemaNresU","isAdmin":false,"lastLogin":{"date":"2023-02-17 12:13:14.000000","timezone_type":3,"timezone":"Europe\/Amsterdam"}}'
+                    ],
+                ],
+                FakeUserCallService::FUNCTION_METHOD_THAT_RUNS => [
+                    [
+                        'user' => $user,
+                        'userProperties' => '{"id":1,"name":"UserName","isAdmin":false,"lastLogin":{"date":"2023-02-17 12:13:14.000000","timezone_type":3,"timezone":"Europe\/Amsterdam"}}'
+                    ],
+                ],
+                FakeUserCallService::FUNCTION_METHOD_THAT_UPDATES => [
+                    [
+                        'user' => $user,
+                        'userProperties' => '{"id":1,"name":"UserName","isAdmin":false,"lastLogin":{"date":"2023-02-17 12:13:14.000000","timezone_type":3,"timezone":"Europe\/Amsterdam"}}'
+                    ],
+                ],
+                FakeUserCallService::FUNCTION_METHOD_THAT_UPDATES_AND_RETURNS => [
+                    [
+                        'user' => $user,
+                        'userProperties' => '{"id":1,"name":"emaNresU","isAdmin":false,"lastLogin":{"date":"2023-02-17 12:13:14.000000","timezone_type":3,"timezone":"Europe\/Amsterdam"}}'
+                    ],
+                ],
+            ],
+            $userCallService->getAllCallsInStyleSorted()
+        );
     }
 
     public function voidOrThrowFailsWhenNoResponsesAreSet(UnitTester $tester): void
