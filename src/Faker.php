@@ -24,7 +24,10 @@ abstract class Faker
     /** @var array<string, array<int, array<string, mixed>>> */
     private array $responsesForCallsToGetPerFunction = [];
 
-    /** @param array<string|int, mixed> $input */
+    /**
+     * @param array<string|int, mixed> $input
+     * @param array<int, mixed> $arguments
+     */
     final protected function returnOrThrow(string $faked, array $input, array $arguments = []): mixed
     {
         $this->callsToPerFunction[$faked][] = $input;
@@ -43,7 +46,10 @@ abstract class Faker
         }
     }
 
-    /** @param array<string|int, mixed> $input */
+    /**
+     * @param array<string|int, mixed> $input
+     * @param array<int, mixed> $arguments
+     */
     final protected function voidOrThrow(string $faked, array $input, array $arguments = []): void
     {
         $this->callsToPerFunction[$faked][] = $input;
