@@ -26,7 +26,8 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": ">=8.0"
+        "php": ">=8.0",
+        "thecodingmachine/safe": ">=2.5"
     },
     "require-dev": {
         "codeception/codeception": ">=5.1",

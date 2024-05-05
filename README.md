@@ -39,7 +39,7 @@ final class FakeUserRepository extends Faker implements UserRepositoryInterface
 
     public function getUserById(int $userId): User
     {
-        return $this->returnOrThrow(__FUNCTION__, [
+        return $this->fakeCall(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }
@@ -47,21 +47,21 @@ final class FakeUserRepository extends Faker implements UserRepositoryInterface
     /** @return array<int, User> */
     public function getUsers(): array
     {
-        return $this->returnOrThrow(__FUNCTION__, [
+        return $this->fakeCall(__FUNCTION__, [
             'a call was made',
         ]);
     }
 
     public function updateLastLogin(int $userId): void
     {
-        $this->returnOrThrow(__FUNCTION__, [
+        $this->fakeCall(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }
 
     public function deleteUser(int $userId): void
     {
-        $this->returnOrThrow(__FUNCTION__, [
+        $this->fakeCall(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }

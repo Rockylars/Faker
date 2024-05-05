@@ -28,7 +28,7 @@ abstract class Faker
      * @param array<string|int, mixed> $input
      * @param array<int, mixed> $arguments
      */
-    final protected function returnOrThrow(string $faked, array $input, array $arguments = []): mixed
+    final protected function fakeCall(string $faked, array $input, array $arguments = []): mixed
     {
         $this->callsToPerFunction[$faked][] = $input;
         if (!array_key_exists($faked, $this->iterationsOfCallsToPerFunction)) {
@@ -40,7 +40,7 @@ abstract class Faker
             array_key_exists(self::ACTION_RETURN, $response) => $response[self::ACTION_RETURN],
             array_key_exists(self::ACTION_FUNCTION, $response) => $response[self::ACTION_FUNCTION](...$arguments),
             array_key_exists(self::ACTION_THROW, $response) => throw $response[self::ACTION_THROW],
-            default => throw new Exception('Unknown response type ' . json_encode(array_keys($response))),
+            default => throw new Exception('Unknown response type ' . \Safe\json_encode(array_keys($response), JSON_INVALID_UTF8_SUBSTITUTE)),
         };
     }
 
