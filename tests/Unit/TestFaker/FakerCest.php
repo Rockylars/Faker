@@ -181,6 +181,23 @@ final class FakerCest
         );
     }
 
+    public function fakeCallWillFailForUnknownActions(UnitTester $tester): void
+    {
+        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
+            [Faker::ACTION_RETURN => self::getExampleUser()],
+        ]);
+        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_DELETE_USER, [
+            ['craggy' => null],
+        ]);
+
+        $tester->expectThrowable(
+            new Exception('Unknown response type ["craggy"]'),
+            function (): void {
+                $this->deleteUserService->deleteUser(2);
+            }
+        );
+    }
+
     /** @see FakerCest::fakeCallWillReturnAndVoidAndThrowMultipleResponses */
     public function addResponseForWillAddResponses(UnitTester $tester): void
     {
