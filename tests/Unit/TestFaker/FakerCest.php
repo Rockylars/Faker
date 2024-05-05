@@ -66,7 +66,7 @@ final class FakerCest
         );
     }
 
-    public function returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses(UnitTester $tester): void
+    public function returnOrThrowWillReturnAndVoidAndThrowMultipleResponses(UnitTester $tester): void
     {
         $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
             [Faker::ACTION_RETURN => self::getExampleUser()],
@@ -113,7 +113,7 @@ final class FakerCest
         $tester->assertNull($this->userWatcherService->userObserved(7));
     }
 
-    public function returnOrThrowAndVoidOrThrowWillExecuteFunctions(UnitTester $tester): void
+    public function returnOrThrowWillExecuteFunctions(UnitTester $tester): void
     {
         $userService = new UserService(
             $userCallService = new FakeUserCallService()
@@ -181,41 +181,7 @@ final class FakerCest
         );
     }
 
-    public function voidOrThrowFailsWhenNoResponsesAreSet(UnitTester $tester): void
-    {
-        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
-            [Faker::ACTION_RETURN => self::getExampleUser()],
-        ]);
-
-        $tester->expectThrowable(
-            new Exception('No responses defined for Rocky\Faker\Tests\Fake\User\FakeUserRepository::deleteUser, add them to the setResponsesFor'),
-            function (): void {
-                $this->deleteUserService->deleteUser(2);
-            }
-        );
-    }
-
-    public function voidOrThrowFailsWhenNotEnoughResponsesAreSet(UnitTester $tester): void
-    {
-        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
-            [Faker::ACTION_RETURN => self::getExampleUser()],
-            [Faker::ACTION_RETURN => self::getExampleUser()],
-        ]);
-        $this->fakeUserRepository->setResponsesFor(FakeUserRepository::FUNCTION_DELETE_USER, [
-            [Faker::ACTION_VOID => null],
-        ]);
-
-        $this->deleteUserService->deleteUser(2);
-
-        $tester->expectThrowable(
-            new Exception('Not enough responses defined for Rocky\Faker\Tests\Fake\User\FakeUserRepository::deleteUser, add more to the setResponsesFor'),
-            function (): void {
-                $this->deleteUserService->deleteUser(2);
-            }
-        );
-    }
-
-    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    /** @see FakerCest::returnOrThrowWillReturnAndVoidAndThrowMultipleResponses */
     public function addResponseForWillAddResponses(UnitTester $tester): void
     {
         $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
@@ -262,7 +228,7 @@ final class FakerCest
         $this->deleteUserService->deleteUser(2);
     }
 
-    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    /** @see FakerCest::returnOrThrowWillReturnAndVoidAndThrowMultipleResponses */
     public function addResponseForWillAddResponsesAndWorkInNewWay(UnitTester $tester): void
     {
         $this->fakeUserRepository->addResponseFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID,
@@ -312,7 +278,7 @@ final class FakerCest
         $this->deleteUserService->deleteUser(2);
     }
 
-    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    /** @see FakerCest::returnOrThrowWillReturnAndVoidAndThrowMultipleResponses */
     public function addResponsesForWillAddResponses(UnitTester $tester): void
     {
         $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
@@ -351,7 +317,7 @@ final class FakerCest
         $this->deleteUserService->deleteUser(2);
     }
 
-    /** @see FakerCest::returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses */
+    /** @see FakerCest::returnOrThrowWillReturnAndVoidAndThrowMultipleResponses */
     public function addResponsesForWillAddResponsesAndWorkInNewWay(UnitTester $tester): void
     {
         $this->fakeUserRepository->addResponsesFor(FakeUserRepository::FUNCTION_GET_USER_BY_ID, [
@@ -393,7 +359,7 @@ final class FakerCest
 
     public function getCallsToWillReturnCallsForIndividualMethods(UnitTester $tester): void
     {
-        $this->returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
+        $this->returnOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
 
         $tester->assertSame(
             [
@@ -421,7 +387,7 @@ final class FakerCest
 
     public function getAllCallsInStyleOrderedWillReturnCallsInChronologicalOrder(UnitTester $tester): void
     {
-        $this->returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
+        $this->returnOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
 
         $tester->assertSame(
             [
@@ -458,7 +424,7 @@ final class FakerCest
 
     public function getAllCallsInStyleSortedWillReturnCallsInAlphabeticalOrder(UnitTester $tester): void
     {
-        $this->returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
+        $this->returnOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
 
         $tester->assertSame(
             [
@@ -494,7 +460,7 @@ final class FakerCest
 
     public function getAllCallsInStyleOrderedExceptWillReturnCallsInChronologicalOrder(UnitTester $tester): void
     {
-        $this->returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
+        $this->returnOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
 
         $tester->assertSame(
             [
@@ -520,7 +486,7 @@ final class FakerCest
 
     public function getAllCallsInStyleSortedExceptWillReturnCallsInAlphabeticalOrder(UnitTester $tester): void
     {
-        $this->returnOrThrowAndVoidOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
+        $this->returnOrThrowWillReturnAndVoidAndThrowMultipleResponses($tester);
 
         $tester->assertSame(
             [

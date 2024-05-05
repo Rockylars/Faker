@@ -54,14 +54,14 @@ final class FakeUserRepository extends Faker implements UserRepositoryInterface
 
     public function updateLastLogin(int $userId): void
     {
-        $this->voidOrThrow(__FUNCTION__, [
+        $this->returnOrThrow(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }
 
     public function deleteUser(int $userId): void
     {
-        $this->voidOrThrow(__FUNCTION__, [
+        $this->returnOrThrow(__FUNCTION__, [
             'userId' => $userId,
         ]);
     }

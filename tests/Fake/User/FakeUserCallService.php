@@ -20,7 +20,7 @@ final class FakeUserCallService extends Faker implements UserCallServiceInterfac
     public function methodThatRuns(User $user): void
     {
         // You should not save the properties in your project's tests. This is merely to confirm that this here is working.
-        $this->voidOrThrow(__FUNCTION__, [
+        $this->returnOrThrow(__FUNCTION__, [
             'user' => $user,
             'userProperties' => \Safe\json_encode($user)
         ]);
@@ -29,7 +29,7 @@ final class FakeUserCallService extends Faker implements UserCallServiceInterfac
     public function methodThatUpdates(User $user): void
     {
         // You should not save the properties in your project's tests. This is merely to confirm that this here is working.
-        $this->voidOrThrow(__FUNCTION__, [
+        $this->returnOrThrow(__FUNCTION__, [
             'user' => $user,
             'userProperties' => \Safe\json_encode($user)
         ], func_get_args());
@@ -47,7 +47,7 @@ final class FakeUserCallService extends Faker implements UserCallServiceInterfac
     public function methodThatChecks(User $user): void
     {
         // You should not save the properties in your project's tests. This is merely to confirm that this here is working.
-        $this->voidOrThrow(__FUNCTION__, [
+        $this->returnOrThrow(__FUNCTION__, [
             'user' => $user,
             'userProperties' => \Safe\json_encode($user)
         ]);
